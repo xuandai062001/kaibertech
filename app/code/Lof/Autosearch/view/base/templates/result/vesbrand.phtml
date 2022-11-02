@@ -1,0 +1,15 @@
+<?php
+use Magento\Framework\App\Action\Action;
+$data         = $this->helper('Lof\Autosearch\Helper\Data');
+$helper      = $this->helper("Ves\Brand\Helper\Data");
+if(isset($vesbrand) && $vesbrand) {
+?>
+<div class="vesbrand_post_item brand-item">
+	<div class="info">
+		<div class="brand-image"><a href="<?php echo $vesbrand->getUrl(); ?>" title="<?php echo $vesbrand->getName(); ?>"><img src="<?php echo $vesbrand->getThumbnailUrl(); ?>" alt="<?php echo $vesbrand->getName(); ?>"/></a></div>
+		<div class="brand-name">
+			<a href="<?php echo $vesbrand->getUrl(); ?>" title="<?php echo $vesbrand->getName();?>"><?php echo $vesbrand->getName();?></a>
+		</div>
+	</div>
+</div>
+<?php } ?>

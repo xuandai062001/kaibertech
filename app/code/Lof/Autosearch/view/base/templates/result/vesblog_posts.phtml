@@ -1,0 +1,21 @@
+<?php
+use Magento\Framework\App\Action\Action;
+$data         = $this->helper('Lof\Autosearch\Helper\Data');
+$helper      = $this->helper("Ves\Blog\Helper\Data");
+if(isset($blog_post) && $blog_post) {
+$postUrl = $helper->getPostUrl($blog_post);
+$shortdescription_count = $helper->getConfig("blog_page/shortdescription_count");
+$shortdescription_count = $shortdescription_count?(int)$shortdescription_count:100;
+?>
+<div class="vesblog_post_item">
+	<div class="info">
+		<div class="post_title">
+			<a href="<?php echo $postUrl; ?>" title="<?php echo $blog_post->getTitle();?>"><?php echo $blog_post->getTitle();?></a>
+		</div>
+		<div class="post-summary">
+			<?php $shortContent = $blog_post->getShortContent(); ?>
+			<?php echo $helper->subString($shortContent, (int)$shortdescription_count); ?>
+		</div>
+	</div>
+</div>
+<?php } ?>

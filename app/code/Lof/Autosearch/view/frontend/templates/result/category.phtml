@@ -1,0 +1,15 @@
+<?php
+use Magento\Framework\App\Action\Action;
+$data         = $this->helper('Lof\Autosearch\Helper\Data');
+if(isset($category) && $category) {
+?>
+<div class="catalog-category category">
+	<div class="info">
+		<div class="page_title">
+			<a href="<?php echo $category->getUrl(); ?>">
+				<?php echo $category->getName(); ?>
+			</a>
+		</div>
+	</div>
+</div>
+<?php } ?>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * http://landofcoder.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_Autosearch
+ * @copyright  Copyright (c) 2016 Landofcoder (http://www.landofcoder.com/)
+ * @license    http://www.landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Lof_Autosearch::autosearch" sortOrder="20" title="Auto Search" module="Lof_Autosearch" resource="Lof_Autosearch::question" parent="Lof_All::lof_all"/>
+		<add id="Lof_Autosearch::configuration" title="Configuration" module="Lof_Autosearch" sortOrder="1000" parent="Lof_Autosearch::autosearch" action="adminhtml/system_config/edit/section/lofautosearch" resource="Lof_Autosearch::config_autosearch"/> 
+	</menu>
+</config>

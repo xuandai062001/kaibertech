@@ -1,0 +1,290 @@
+.header.content .lof-autosearch {
+    float: left;
+    margin-left: 150px;
+}
+
+.header.content .lof-search {
+    width: 450px;
+}
+.lof-autosearch ul.search-results {
+    position: relative;
+    width: 100%;
+    display: block!important;
+}
+.lof-autosearch .search {
+    position: relative;
+    width: 400px;
+    float: left;
+}
+
+.lof-autosearch .button-search {
+    color: #7bbd42;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    box-shadow: none;
+}
+
+.lof-autosearch .input-search {
+    font-size: 12px;
+    border-left: 1px solid #dcdcdc;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    height: 36px;
+    background-color: #FFFFFF;
+    font-style: italic;
+}
+
+.lof-autosearch .input-search:hover, .lof-autosearch .input-search:focus {
+    outline: none;
+}
+
+.lof-autosearch .input-group {
+    overflow: visible;
+    border: 1px solid #e9e9e9;
+    width: 100%;
+}
+
+.lof-autosearch .input-group .box {
+    margin: 0;
+    overflow: visible;
+}
+
+.lof-autosearch .category-filter {
+    position: relative;
+    float: left;
+}
+
+.lof-autosearch .category-filter select {
+    height: 36px;
+    font-size: 13px;
+    color: #8c8c8c;
+    width: 165px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    cursor: pointer;
+}
+
+.lof-autosearch .category-filter span {
+    background-color: #f9f9f9;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 10px;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+}
+
+.lof-autosearch .category-filter .fa-caret-down {
+    position: absolute;
+    color: #7bbd42;
+    cursor: pointer;
+}
+
+.lof-autosearch .ui-autocomplete {
+    width: 408px;
+    z-index: 9999;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    background: #FFF
+}
+
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+    background: none;
+    border: none;
+    font-weight: inherit;
+}
+
+.lof-autosearch .ui-autocomplete-loading {
+    background: #fff url(image/ajax-loader.gif) no-repeat 95%;
+}
+
+.lof-autosearch #search_tags {
+    margin-top: 15px;
+    clear: both;
+    float: left;
+}
+
+.lof-autosearch #search_tags a {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    color: #fff;
+    display: inline-block;
+    font-size: 10px;
+    margin: 0 10px 10px 0;
+    padding: 5px;
+    text-transform: uppercase;
+}
+
+.lof-autosearch #search_tags a:hover {
+    color: #cd3e40;
+}
+
+.lof-autosearch .search_tags .title {
+    color: #666;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 15px;
+    text-align: left;
+    text-transform: uppercase;
+    margin-right: 30px;
+}
+
+.lof-autosearch .search_tags .content {
+    text-align: left;
+    clear: both;
+}
+
+.lof-autosearch .ui-autocomplete {
+    padding: 15px;
+    border: 1px solid #ddd;
+    position: absolute;
+    list-style: none;
+}
+
+.lof-autosearch .image {
+    float: left
+}
+
+.lof-autosearch .ui-menu-item {
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.lof-autosearch .ui-helper-hidden-accessible {
+    display: none
+}
+
+.lof-autosearch .product {
+    border-bottom: 1px solid #f2f2f2;
+    float: left;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.lof-autosearch .ui-autocomplete li:first-child .product {
+    padding-top: 0;
+}
+
+.lof-autosearch .smore {
+    float: right;
+    padding-top: 15px;
+}
+
+.lof-autosearch .ui-autocomplete li:last-child {
+    margin-bottom: 0;
+    padding-top: 10px;
+    float: left;
+}
+
+.lof-autosearch .ui-autocomplete li:first-child {
+    padding-top: 0;
+}
+
+.lof-autosearch .info .name span {
+    text-decoration: underline;
+}
+
+.lof-autosearch .suggested-keywords a {
+    text-decoration: underline;
+}
+
+.lof-autosearch #search-tags {
+    margin-top: 3px;
+    float: left;
+    width: 100%;
+    text-align: center;
+}
+
+.lof-autosearch #search-tags .title {
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.lof-autosearch #search-tags .content {
+    display: inline-block;
+}
+
+.lof-search {
+    float: left;
+    width: 100%;
+}
+
+.lof-autosearch {
+    position: relative;
+}
+
+@media only screen and (max-width: 1023px) {
+    .lof-autosearch .category-filter {
+        width: 25%;
+    }
+
+    .lof-autosearch .category-filter select {
+        width: 100%
+    }
+
+    .header.content .lof-search {
+        width: 75%
+    }
+
+    .header.content .lof-autosearch {
+        margin-left: 50px;
+        margin-bottom: 20px;
+        width: 600px
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .lof-autosearch .category-filter {
+        width: 25%;
+    }
+
+    .lof-autosearch .category-filter select {
+        width: 100%
+    }
+
+    .header.content .lof-search {
+        width: 75%
+    }
+
+    .header.content .lof-autosearch {
+        margin-left: 0;
+        width: 100%
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    .lof-autosearch .category-filter select, .lof-autosearch .category-filter {
+        width: 100%
+    }
+
+    .header.content .lof-autosearch {
+        margin-bottom: 20px
+    }
+
+    .header.content .lof-search {
+        width: 100%
+    }
+
+    .lof-autosearch .button-search {
+        bottom: 2px;
+        top: auto;
+    }
+
+    .lof-autosearch .category-filter span {
+        text-align: center;
+    }
+}

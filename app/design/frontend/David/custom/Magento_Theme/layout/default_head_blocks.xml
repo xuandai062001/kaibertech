@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link rel="stylesheet" type="text/css" src="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700" src_type="url" />
+        <link rel="stylesheet" type="text/css" src="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700" src_type="url" />
+        <css src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" src_type="url"/>
+        <css src="Magento_Theme::css/custom.css"/>
+        <css src="Magento_Theme::css/owl.carousel.css"/>
+        <css src="Magento_Theme::owl.theme.default.css"/>
+        <!-- <script src="Magento_Theme::js/custom.js" async="async" /> -->
+    </head>
+</page>

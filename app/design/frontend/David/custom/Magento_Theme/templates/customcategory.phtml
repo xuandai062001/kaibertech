@@ -1,0 +1,19 @@
+<div class="dropdown">
+  <div class="dropdown-container">
+    <span class="dropdown-label">All Categories <i class="fa-solid fa-chevron-down"></i> </span>
+    <div class="dropdown-content">
+      <?php // get the list of all categories
+          $categories = $block->getCategoryCollection(); 
+          foreach ($categories as $category) {
+              if($category->getName() != "root"){
+                  ?>
+                  <div>
+                      <a href="<?php echo $category->getUrl()?>"><?php echo $category->getName() ?></a>
+                  </div>
+              <?php
+              }
+          }
+      ?>
+    </div>
+  </div>
+</div>

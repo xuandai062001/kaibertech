@@ -1,0 +1,24 @@
+<?php
+    $baseUrl= $block->getUrlInterfaceData();
+    if($block->isCustomerLoggedIn()){
+        ?>
+        <div class="customer">
+            <i class="fa-regular fa-user"></i> <a href=<?php echo $baseUrl . "customer/account"?>>My Acount</a>
+        </div>
+        
+        <?php
+    }
+    else{
+        ?>
+        <div class="customer">
+            <i class="fa-regular fa-user"></i> <a href=<?php echo $baseUrl . "customer/account"?>>Login/Register</a>
+        </div>
+        <?php
+    }
+
+    ?>
+        <div class="customer">
+            <i class="fa-regular fa-heart"></i> <a href=<?php echo $baseUrl . "wishlist"?>>Wishlist</a>
+        </div>
+    <?php
+?>

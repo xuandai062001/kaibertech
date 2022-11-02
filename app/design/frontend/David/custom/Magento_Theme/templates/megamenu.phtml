@@ -1,0 +1,127 @@
+<?php
+    $menu = array("HOME", "ABOUT US", "OUR BRANDS", "CONTACT US");
+	$pages = $block->getPages();
+    $baseUrl= $block->getUrlInterfaceData();
+    $currentUrl = $block->getCurrentUrl();
+
+    $id = 8;
+        $padding = 0;
+        $categoryCollection = $this->getCategoryLinks($id); //Fetches categories from the Block method $getCategoryLinks
+    $checkArrowIcon = 0;
+    $identifier = "";
+    ?>
+    <div class="custom-menu">
+        <ul id="menu">
+            <?php
+            foreach($pages as $page) {
+                foreach ($menu as $item){
+                    if($page->getData("identifier")  == "home"){
+                        $identifier = "";
+                    }
+                    else{
+                        $identifier = $page->getData("identifier");
+                    }
+
+                    if($page->getTitle() == $item){
+                       if($currentUrl == $baseUrl . $page->getData("identifier")){
+                        ?>
+                        <li class="parent parent-bold"><a href=<?php echo $baseUrl . $identifier?>><?php echo $page->getTitle()?></a>
+                            <i class="fa-solid fa-caret-up on-icon"></i>
+                        <?php }
+                        elseif($currentUrl == $baseUrl && $checkArrowIcon == 0){
+                            $checkArrowIcon = 1;
+                            ?>
+                            <li class="parent parent-bold"><a href=<?php echo $baseUrl . $identifier?>><?php echo $page->getTitle()?></a>
+                            <i class="fa-solid fa-caret-up on-icon"></i>
+                        <?php
+                        }
+                        else{
+                            ?>
+                            <li class="parent parent-normal"><a href=<?php echo $baseUrl . $identifier?>><?php echo $page->getTitle()?></a>
+                            <i class="fa-solid fa-caret-up off-icon"></i>
+                        <?php 
+                        } 
+                    }?>
+                        </li><?php
+                       
+                }
+
+                if($page->getData("identifier") == "about-us"){
+                    ?>
+                     <?php if($currentUrl == $baseUrl . 'products.html'){?>
+                            <li class="parent parent-bold"><a class="first-parent" href=<?php echo $baseUrl."products.html" ?>>PRODUCTS</a>
+                            <i class="fa-solid fa-caret-up on-icon"></i>
+                        <?php }
+                        else{
+                            ?>
+                            <li class="parent"><a class="first-parent" href=<?php echo $baseUrl."products.html" ?>>PRODUCTS</a>
+                            <i class="fa-solid fa-caret-up off-icon"></i>
+                        <?php 
+                        } ?>
+                     <?php
+                        autoCreateMenu($categoryCollection, $padding) 
+                     ?>
+                            </li>
+                    <?php
+                }
+            }?>
+            </ul>
+    </div>
+
+            <?php
+           function getLength($subcategories){
+                $lengthOfCate = 0;
+                foreach($subcategories as $subcategory){
+                    $lengthOfCate = $lengthOfCate + 1;
+                }
+                return $lengthOfCate;
+            }
+            function autoCreateMenu($categoryCollection, $padding)
+            {
+                if ($categoryCollection->getChildrenCategories()){
+                    $padding = $padding + 1;
+                    $subcategories = $categoryCollection->getChildrenCategories();
+                    if($padding == 1){
+                        ?><ul class="child first-child"><?php
+                    }
+                    else{
+                        ?><ul class="child"><?php
+                    }
+                    
+                    $count = 0;
+                    $lengthOfCate = getLength($subcategories);
+                   
+                    foreach($subcategories as $subcategory){
+
+                        $count = $count + 1;
+                            if($count == 1 && $lengthOfCate != 1){
+                                ?>
+                                <li class="parent parent-first"><a href="<?php echo $subcategory->getUrl() ?>"><?php echo $subcategory->getName() ?></a> <?php autoCreateMenu($subcategory, $padding);?></li>
+                                <?php
+                            }
+                            elseif($count == 1 && $lengthOfCate == 1){
+                                ?>
+                                <li class="parent parent-all"><a href="<?php echo $subcategory->getUrl() ?>"><?php echo $subcategory->getName() ?></a> <?php autoCreateMenu($subcategory, $padding);?></li>
+                                <?php
+                            }
+                            elseif($count == $lengthOfCate){
+                                ?>
+                                <li class="parent parent-final"><a href="<?php echo $subcategory->getUrl() ?>"><?php echo $subcategory->getName() ?></a> <?php autoCreateMenu($subcategory, $padding);?></li>
+                                <?php
+                            }
+                            else{
+                                ?>
+                                <li class="parent"><a href="<?php echo $subcategory->getUrl() ?>"><?php echo $subcategory->getName() ?></a> <?php autoCreateMenu($subcategory, $padding);?></li>
+                                <?php
+                            }
+                            
+                    }
+                    ?></ul><?php
+                }
+                else{
+                    return;
+                }
+                
+            }
+            ?>
+        

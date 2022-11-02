@@ -1,0 +1,115 @@
+body {
+	font-family: 'DM Sans', sans-serif;
+}
+
+.title{
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    color: white;
+    font-weight: 700;
+    font-size: 36px;
+}
+
+.description{
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    color: white;
+    font-weight: 700;
+    font-size: 100px;
+}
+
+.button{
+    position: absolute;
+    top: 60%;
+    left: 10%;
+    color: white;
+    background-color: #FD8420;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 5px;
+    border: none;
+    padding: 15px 20px;
+}
+
+.slider-index{
+    position: absolute;
+    display: block;
+    top: 35%;
+    right: 4.8%;
+    color:white;
+    font-size: 30px;
+}
+.owl-carousel .owl-stage-outer:after {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 5px;
+    height: 150px;
+    top: 40%;
+    right: 5.4%;
+    background: #FFF;
+}
+
+.mp-banner-slider .owl-nav button span{
+    position: absolute;
+    font-size: 50px;
+    color: white;
+    transform: rotate(90deg);
+}
+
+.mp-banner-slider .owl-nav button span:hover{  
+    color: red;
+}
+
+.mp-banner-slider .owl-nav .owl-prev span{
+    top: 55%;
+    right: 5%;
+}
+.mp-banner-slider .owl-nav .owl-next span{
+    top: 60%;
+    right: 5%;
+}
+.mp-banner-slider .owl-dots{
+    position: absolute;
+    top: 88%;
+    left: 49%;
+}
+.mp-banner-slider .owl-dots .owl-dot{
+    box-shadow: none;
+}
+.sidebar .mp-banner-slider .owl-nav button span{
+    font-size: 30px;
+    top: 30%;
+}
+.sidebar .mp-banner-slider .owl-dots .owl-dot span{
+    width: 8px;
+    height: 8px;
+}
+.sidebar .mp-banner-slider .owl-dots{
+    top: 70%;
+    left: 42.5%;
+}
+
+@media only screen and (max-width: 764px) {
+    .mp-banner-slider .owl-nav button span{
+        top: 20%;
+        font-size: 45px;
+    }
+    .mp-banner-slider .owl-dots{
+        top: 62%;
+        left: 47%;
+    }
+}
+
+@media only screen and (max-width: 1024px) and (min-width: 768px) {
+    .mp-banner-slider .owl-nav button span{
+        top: 30%;
+        font-size: 50px;
+    }
+    .mp-banner-slider .owl-dots{
+        top: 75%;
+        left: 49%;
+    }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * http://landofcoder.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_Autosearch
+ * @copyright  Copyright (c) 2016 Landofcoder (http://www.landofcoder.com/)
+ * @license    http://www.landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<lofautosearch>
+			<general>
+				<show>1</show>
+				<prefix></prefix>
+				<show_filter_category>1</show_filter_category>
+				<max_category_level>3</max_category_level>
+				<limit>5</limit>
+				<search_delay>500</search_delay>
+				<show_sku>0</show_sku>
+				<show_price>1</show_price>
+				<show_image>1</show_image>
+				<thumb_width>100</thumb_width>
+				<thumb_height>100</thumb_height>
+				<show_short_description>0</show_short_description>
+				<short_max_char>100</short_max_char>
+				<show_review>1</show_review>
+				<show_addtocart>1</show_addtocart>
+				<image_type>category_page_grid</image_type>
+			</general>
+			<search_terms>
+				<enable_search_term>0</enable_search_term>
+				<enable_ajax_search_term>0</enable_ajax_search_term>
+				<limit_term>5</limit_term>
+			</search_terms>
+			<search_options>
+				<enable_search_cms>0</enable_search_cms>
+				<enable_search_vesblog>0</enable_search_vesblog>
+				<enable_search_vesbrand>0</enable_search_vesbrand>
+				<enable_search_loffaq>0</enable_search_loffaq>
+			</search_options>
+		</lofautosearch>
+	</default>
+</config>

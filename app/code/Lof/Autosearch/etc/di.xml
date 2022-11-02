@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Lof\Autosearch\Api\AutosearchManagementInterface" type="Lof\Autosearch\Model\AutosearchManagement"/>
+	<preference for="Lof\Autosearch\Api\Data\ItemInterface" type="Lof\Autosearch\Model\ResultItem"/>
+	<preference for="Lof\Autosearch\Api\Data\SearchResultInterface" type="Lof\Autosearch\Model\SearchRepository" />
+</config>

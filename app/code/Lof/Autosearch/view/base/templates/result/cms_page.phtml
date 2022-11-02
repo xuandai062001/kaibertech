@@ -1,0 +1,15 @@
+<?php
+use Magento\Framework\App\Action\Action;
+$data         = $this->helper('Lof\Autosearch\Helper\Data');
+if(isset($cms_page) && $cms_page) {
+?>
+<div class="cms_page">
+	<div class="info">
+		<div class="page_title">
+			<a href="<?php echo $this->getUrl(null, ['_direct' => $cms_page->getIdentifier()]); ?>">
+				<?php echo $cms_page->getTitle(); ?>
+			</a>
+		</div>
+	</div>
+</div>
+<?php } ?>

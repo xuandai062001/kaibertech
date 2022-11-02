@@ -1,0 +1,65 @@
+<?php
+    $menu = array("HOME", "ABOUT US", "OUR BRANDS", "CONTACT US");
+	$pages = $block->getPages();
+    $baseUrl= $block->getUrlInterfaceData();
+    $currentUrl = $block->getCurrentUrl();
+
+    $id = 8;
+    $padding = 0;
+    $categoryCollection = $this->getCategoryLinks($id); //Fetches categories from the Block method $getCategoryLinks
+    ?>
+    <div class="page-menu">
+        <?php
+        foreach($pages as $page) {
+            foreach ($menu as $item){
+                if($page->getTitle() == $item){
+                    ?>
+                    <div class="page-item">
+                        <a href=<?php echo $baseUrl . $page->getData("identifier")?>><?php echo $page->getTitle()?></a>
+                        <?php if($currentUrl == $baseUrl . $page->getData("identifier")){?>
+                            <i class="fa-solid fa-caret-up"></i>
+                        <?php } ?> 
+                    </div>
+                    <?php
+                }
+            }
+            if($page->getData("identifier") == "about-us"){
+                ?><ul id="menu" class="page-item">
+                 <li class="parent first-li"><a class="first-parent" href="<?php echo $baseUrl."products.html" ?>">Products</a> <?php
+                    autoCreateMenu($categoryCollection, $padding) 
+                 ?>
+                 </li>
+                </ul><?php
+            }
+        }
+        ?>
+        <?php
+       
+            function autoCreateMenu($categoryCollection, $padding)
+            {
+                if ($categoryCollection->getChildrenCategories()){
+                    $padding = $padding + 1;
+                    $subcategories = $categoryCollection->getChildrenCategories();
+                    if($padding == 1){
+                        ?><ul class="child first-child"><?php
+                    }
+                    else{
+                        ?><ul class="child"><?php
+                    }
+                    foreach($subcategories as $subcategory){
+                        ?>
+                            <li class="parent"><a href="<?php echo $subcategory->getUrl() ?>"><?php echo $subcategory->getName() ?></a> <?php autoCreateMenu($subcategory, $padding);?></li>
+                        
+                        <?php
+                        
+                    }
+                    ?></ul><?php
+                }
+                else{
+                    return;
+                }
+                
+            }
+            
+            ?>
+    </div>

@@ -1,0 +1,351 @@
+<?php
+$helper = $this->helper('Magento\Search\Helper\Data');
+$dataHelper = $this->helper('Lof\Autosearch\Helper\Data');
+$enable_search_cms = $dataHelper->getConfig("search_options/enable_search_cms");
+$enable_search_vesblog = $dataHelper->getConfig("search_options/enable_search_vesblog");
+$enable_search_vesbrand = $dataHelper->getConfig("search_options/enable_search_vesbrand");
+$enable_search_loffaq = $dataHelper->getConfig("search_options/enable_search_loffaq");
+$enable_search_category = $dataHelper->getConfig("search_options/enable_search_category");
+?>
+<script type="text/javascript">
+    function CheckBrowser(e) {
+        if (window.event)
+            key = window.event.keyCode;     //IE
+        else
+            key = e.which;     //firefox
+        return key;
+    }
+	require(['jquery','jquery/ui'], function($){
+		jQuery(document).ready(function($) {
+			$(document).find('.lof-autosearch').each(function(index, el) {
+				var self          = $(this);
+				var selector      = self.find('input[name=\'<?php echo $helper->getQueryParamName() ?>\']').eq(0);
+				var inputName 	  = self.find('input[name=\'name\']').eq(0);
+				var cache         = suggested = [];
+				var catBlock      = self.find('select[name=\"cat\"]').eq(0);
+				
+				if( typeof(selector.autocomplete) == 'function') {
+					selector.autocomplete({
+						delay: <?php echo (int)$search_delay ?>,
+						minLength: 0,
+						appendTo: self.find('.lof-search').eq(0),
+						position: {
+							my: "left top",
+							at: "left bottom",
+							collision: "none"
+						},
+						search: function(event, ui) {
+							$(this).addClass("ui-autocomplete-loading");
+						},
+						open: function() {
+							$(this).removeClass("ui-autocomplete-loading");
+						},
+						select: function(event, ui) {
+							var key = CheckBrowser(event);
+			                if (key == 13) return true;
+							var text = $.trim(selector.val());
+						},
+						source: function(request, response) {
+							var text = encodeURIComponent(request.term);
+							var rData = '';
+							if(catBlock.length && catBlock.val()!=<?php echo $this->getRootCategoryId() ?>){
+								category_id = catBlock.val();
+								rData = 'cat=' + category_id + '&';
+							}
+							rData += 'q=' + text;
+							if(inputName !== undefined){
+								inputName.val(text);
+							}
+							$.ajax({
+								url: '<?php echo $listProductLink ?>',
+								dataType: 'json',
+								data: rData,
+								type:'POST',
+								beforeSend: function() {
+									if(!$.trim(selector.val())){
+										selector.removeClass("ui-autocomplete-loading");
+										self.find('.ui-autocomplete').eq(0).css({'display':'none'});
+										return false;
+									}
+									if(typeof(cache[text]) != 'undefined'){
+										var items = cache[text];
+										total = cache[text].total;
+										if(items.products && items.products.length > 0) {
+											response($.map(items.products, function(item) {
+												return {
+													html: item.html,
+													value: text
+												}
+											}));
+											
+										}
+										return false;
+									}
+								},
+								success: function(data) {
+									var results = [];
+									var text_view_all = '<?php echo __("View all %s items");?>';
+									var products = data.products;
+									var total = data.total;
+									var suggested = [];
+									suggested = data.suggested;
+									var suggestHtml = '';
+									var length = suggested.length;
+									cache[text] = data;
+
+									for (var i = 0; i < length; i++) {
+										suggestHtml += '<a href="' + suggested[i]['url'] + '">' + suggested[i]['query_text'] + '<span>(' + suggested[i]['num_results'] + ')</span>' + '</a>';
+										if( i != (length-1) )
+											suggestHtml += ', ';
+									}
+									var rItem = [];
+									if( length>0 ){
+										rItem['name'] = rItem['image'] = rItem['link'] = '';
+										rItem['price'] = rItem['product_id'] = 0;
+										rItem['html'] = '<div class="product suggested-keywords"><?php echo __('Suggested keywords: ') ?>' + suggestHtml + '</div>';
+										products.unshift(rItem);
+									}
+									if( total ){
+										text_view_all = text_view_all.replace(/%s/gi, total);
+										rItem = [];
+										rItem['name'] = rItem['image'] = rItem['link'] = '';
+										rItem['price'] = rItem['product_id'] = 0;
+										rItem['html'] = '<a class="smore" href="<?php echo $this->getCatalogAdvancedSearchLink(); ?>?name='+text+'" onclick="window.location=this.href">'+text_view_all+'</a>';
+										products.push(rItem);
+										//Init search products
+										var result_products = [];
+										result_products['title'] = '<?php __("Products"); ?>';
+										result_products['html'] = '<div class="search-results result-col result-cms">';
+										for(i=0;i<products.length;i++){
+											result_products['html'] += products[i].html;
+										}
+										result_products['html'] +='</div>';
+										results.push(result_products);
+										//End Init search products
+									}
+
+									<?php if($enable_search_category) { ?>
+										if(typeof(data.category) !== 'undefined'){ 
+											var categories = [];
+											var category = data.category;
+											var category_total = data.category_total;
+											var category_text_all = '<?php echo __("We found <strong>%s</strong> categories");?>';
+											if( category_total ){
+												category_text_all = category_text_all.replace(/%s/gi, category_total);
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = category_text_all;
+												category.push(rItem);
+
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = '<hr class="category-result-separator"><h3 class="search-result-categories"><span><?php echo __("Categories"); ?></span></h3>';
+												categories.push(rItem);
+
+												for(i=0;i<category.length;i++){
+													categories.push(category[i]);
+												}
+												//Init search cms pages
+												var result_category = [];
+												result_category['title'] = '<?php __("Categories"); ?>';
+												result_category['html'] = '<div class="search-results result-col result-category">';
+												for(i=0;i<categories.length;i++){
+													result_category['html'] += categories[i].html;
+												}
+												result_category['html'] += '</div>';
+												results.push(result_category);
+												//End Init search cms pages
+											}
+										}
+									<?php } ?>
+
+									<?php if($enable_search_cms) { ?>
+										if(typeof(data.cms) !== 'undefined'){ 
+											var cms_pages = [];
+											var cms = data.cms;
+											var cms_total = data.cms_total;
+											var cms_text_all = '<?php echo __("We found <strong>%s</strong> cms pages");?>';
+											if( cms_total ){
+												cms_text_all = cms_text_all.replace(/%s/gi, cms_total);
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = cms_text_all;
+												cms.push(rItem);
+
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = '<hr class="cms-result-separator"><h3 class="search-result-cms-pages"><span><?php echo __("CMS Pages"); ?></span></h3>';
+												cms_pages.push(rItem);
+
+												for(i=0;i<cms.length;i++){
+													cms_pages.push(cms[i]);
+												}
+												//Init search cms pages
+												var result_cms = [];
+												result_cms['title'] = '<?php __("Cms Pages"); ?>';
+												result_cms['html'] = '<div class="search-results result-col result-cms">';
+												for(i=0;i<cms_pages.length;i++){
+													result_cms['html'] += cms_pages[i].html;
+												}
+												result_cms['html'] += '</div>';
+												results.push(result_cms);
+												//End Init search cms pages
+											}
+										}
+									<?php } ?>
+
+									<?php if($enable_search_vesblog) { ?>
+										if(typeof(data.vesblog) !== 'undefined'){ 
+											var vesblog_items = [];
+											var vesblog = data.vesblog;
+											var vesblog_total = data.vesblog_total;
+											var vesblog_text_all = '<?php echo __("We found <strong>%s</strong> blog posts");?>';
+											if( vesblog_total ){
+												vesblog_text_all = vesblog_text_all.replace(/%s/gi, vesblog_total);
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = vesblog_text_all;
+												vesblog.push(rItem);
+
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = '<hr class="vesblog-result-separator"><h3 class="search-result-vesblog-pages"><span><?php echo __("Blog Posts"); ?></span></h3>';
+
+												vesblog_items.push(rItem);
+
+												for(i=0;i<vesblog.length;i++){
+													vesblog_items.push(vesblog[i]);
+												}
+												//Init search cms pages
+												var result_blog = [];
+												result_blog['title'] = '<?php __("Blog Posts"); ?>';
+												result_blog['html'] = '<div class="search-results result-col result-vesblog">';
+												for(i=0;i<vesblog_items.length;i++){
+													result_blog['html'] += vesblog_items[i].html;
+												}
+												result_blog['html'] += '</div>';
+												results.push(result_blog);
+												//End Init search cms pages
+											}
+										}
+									<?php } ?>
+
+									<?php if($enable_search_vesbrand) { ?>
+										if(typeof(data.vesbrand) !== 'undefined'){ 
+											var vesbrand_items = [];
+											var vesbrand = data.vesbrand;
+											var vesbrand_total = data.vesbrand_total;
+											var vesbrand_text_all = '<?php echo __("We found <strong>%s</strong> brands");?>';
+											if( vesbrand_total ){
+												vesbrand_text_all = vesbrand_text_all.replace(/%s/gi, vesbrand_total);
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = vesbrand_text_all;
+												vesbrand.push(rItem);
+
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = '<hr class="vesbrand-result-separator"><h3 class="search-result-vesbrand-pages"><span><?php echo __("Brands"); ?></span></h3>';
+
+												vesbrand_items.push(rItem);
+
+												for(i=0;i<vesbrand.length;i++){
+													vesbrand_items.push(vesbrand[i]);
+												}
+												//Init search cms pages
+												var result_brand = [];
+												result_brand['title'] = '<?php __("Brands"); ?>';
+												result_brand['html'] = '<div class="search-results result-col result-vesbrand">';
+												for(i=0;i<vesbrand_items.length;i++){
+													result_brand['html'] += vesbrand_items[i].html;
+												}
+												result_brand['html'] += '</div>';
+												results.push(result_brand);
+												//End Init search cms pages
+											}
+										}
+									<?php } ?>
+
+									<?php if($enable_search_loffaq) { ?>
+										if(typeof(data.loffaq) !== 'undefined'){
+											var loffaq_items = []; 
+											var loffaq = data.loffaq;
+											var loffaq_total = data.loffaq_total;
+											var loffaq_text_all = '<?php echo __("We found <strong>%s</strong> faq questions");?>';
+											if( loffaq_total ){
+												loffaq_text_all = loffaq_text_all.replace(/%s/gi, loffaq_total);
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = loffaq_text_all;
+												loffaq.push(rItem);
+
+												rItem = [];
+												rItem['title'] = rItem['identifier'] = rItem['link'] = '';
+												rItem['html'] = '<hr class="loffaq-result-separator"><h3 class="search-result-loffaq-pages"><span><?php echo __("FAQ Questions"); ?></span></h3>';
+
+												loffaq_items.push(rItem);
+
+												for(i=0;i<loffaq.length;i++){
+													loffaq_items.push(loffaq[i]);
+												}
+												//Init search cms pages
+												var result_faq = [];
+												result_faq['title'] = '<?php __("Faqs"); ?>';
+												result_faq['html'] = '<div class="search-results result-col result-loffaq">';
+												for(i=0;i<loffaq_items.length;i++){
+													result_faq['html'] += loffaq_items[i].html;
+												}
+												result_faq['html'] += '</div>';
+												results.push(result_faq);
+												//End Init search cms pages
+											}
+										}
+									<?php } ?>
+
+									response($.map(results, function(item) {
+											return {
+												html: item.html,
+												value: text
+											}
+										}));
+								}
+							});
+						},
+						focus: function(event, ui) {
+							return false;
+						}
+					});
+					if(selector.data( "ui-autocomplete" )){
+						selector.data( "ui-autocomplete" )._renderItem = function(ul,item){
+							console.log("\n Generate result items");
+							var html = item.html;
+							var li_element = $("<li></li>").data("ui-autocomplete-item",item).append(html).appendTo(ul);
+							return li_element;
+						}
+						
+					} else {
+						selector.data( "uiAutocomplete" )._renderItem = function(ul,item){
+							console.log("\n Generate result items");
+							var html = item.html;
+							var li_element = $("<li></li>").data("ui-autocomplete-item",item).append(html).appendTo(ul);
+							return li_element;
+						}
+					}
+					selector.on("click change", function(){
+						var text = $.trim(selector.val());
+						if(text){
+							var iUi = self.find('.ui-autocomplete').eq(0);
+							if(typeof(cache[text]) !== 'undefined'){
+								if(iUi.html()){
+									iUi.css({'display':'block'});
+								}
+							}
+						}
+					});
+				} else {
+					console.log('autocomplete');
+				}
+			});
+});
+});
+</script>

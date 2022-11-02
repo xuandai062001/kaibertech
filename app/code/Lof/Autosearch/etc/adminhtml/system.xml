@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * http://landofcoder.com/license
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category   Landofcoder
+ * @package    Lof_Autosearch
+ * @copyright  Copyright (c) 2016 Landofcoder (http://www.landofcoder.com/)
+ * @license    http://www.landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Config/etc/system_file.xsd"> 
+	<system>
+		<section id="lofautosearch" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+			<class>separator-top</class>
+			<label>Auto Search</label>
+			<tab>landofcoder</tab>
+			<resource>Lof_Autosearch::config</resource>
+			<group id="general" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>
+				<field id="show" translate="label comment" type="select" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Module</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="search_fulltext" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Search FullText</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="prefix" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Prefix Class</label>
+				</field>
+				<field id="show_filter_category" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Filter Category</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="max_category_level" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Max Categories Level</label>
+					<depends><field id="show_filter_category">1</field></depends>
+				</field>
+				<field id="show_inmenu_category" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Only Categories Include In Menu</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends><field id="show_filter_category">1</field></depends>
+				</field>
+				<field id="limit" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Number of Results Product Search</label>
+				</field>
+				<field id="search_delay" translate="label" type="text" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Search Delay]]></label>
+                    <validate>validate-zero-or-greater integer</validate>
+                </field>
+				<field id="product_heading" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product</label>
+					<frontend_model>Lof\Autosearch\Block\Adminhtml\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+				<field id="show_sku" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show SKU</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_price" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Price</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_image" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Image</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="thumb_width" translate="label comment" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Width</label>
+					<validate>validate-zero-or-greater integer</validate>
+					<depends><field id="show_image">1</field></depends>
+				</field>
+				<field id="thumb_height" translate="label comment" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Image Height</label>
+					<validate>validate-zero-or-greater integer</validate>
+					<depends><field id="show_image">1</field></depends>
+				</field>
+				<field id="show_short_description" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Short Description</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="short_max_char" translate="label comment" type="text" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Description Character Limit</label>
+					<comment><![CDATA[Empty to show all short description]]></comment>
+					<depends><field id="show_short_description">1</field></depends>
+				</field>
+				<field id="show_review" translate="label comment" type="select" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Review</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_addtocart" translate="label comment" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Add To Cart Button</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="image_type" translate="label comment" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Image Type</label>
+					<comment translate="true"><![CDATA[Input Product Image Type. For Example: category_page_grid, image, small_image or thumbnail]]></comment>
+				</field>
+			</group>
+			<group id="search_terms" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Keyword Terms</label>
+				<field id="enable_search_term" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Keyword Terms</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_ajax_search_term" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Keyword Suggestion</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="limit_term" translate="label comment" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Limit Terms</label>
+				</field>
+			</group>
+			<group id="search_options" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Autosearch For Other Data</label>
+				<field id="enable_search_category" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Search Catalog Categories</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_search_cms" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Search CMS Pages</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="enable_search_vesblog" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Search Ves Blog Posts</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment translate="true"><![CDATA[You should purchase and setup the module Ves Blog for your site.<br/> Purchase it at here: <a href="https://landofcoder.com/magento-2-blog-extension.html/" target="_BLANK">https://landofcoder.com/magento-2-blog-extension.html/</a>]]></comment>
+				</field>
+				<field id="enable_search_vesbrand" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Search Ves Brand</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment translate="true"><![CDATA[You should purchase and setup the module Ves Brand for your site.<br/> Purchase it at here: <a href="https://landofcoder.com/magento-2-brand-extension.html/" target="_BLANK">https://landofcoder.com/magento-2-brand-extension.html/</a>]]></comment>
+				</field>
+				<field id="enable_search_loffaq" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enabled Search Lof Faq Questions</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment translate="true"><![CDATA[You should purchase and setup the module Lof Faq for your site.<br/> Purchase it at here: <a href="https://landofcoder.com/faq-extension-for-magento2.html/" target="_BLANK">https://landofcoder.com/faq-extension-for-magento2.html/</a>]]></comment>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

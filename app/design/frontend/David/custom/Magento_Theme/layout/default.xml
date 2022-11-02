@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- remove header.container in default layout in magento-theme -->
+        <referenceBlock name="header.container" remove="true" /> 
+        <referenceBlock name="page.main.title" remove="true" /> 
+        <referenceContainer name="page.wrapper">
+            <container name="custom.header.container" htmlTag="div" htmlClass="myheader" before="-">
+                <block class="David\Custom\Block\CmsPageData" name="menu.header" template="Magento_Theme::megamenu.phtml" after="top.header">
+                </block>
+                <block class="David\Custom\Block\Customer" name="customer.header" template="Magento_Theme::customer.phtml" after="custom.header.container">
+                </block>
+            </container>
+        </referenceContainer>    
+        <move element="minicart" destination="custom.header.container" />
+        <move element="logo" as="logo" destination="custom.header.container" before="-"/>       
+    </body>
+</page>
+

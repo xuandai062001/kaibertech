@@ -1,0 +1,45 @@
+<?php
+$moduleId       = rand().time();
+$module_seletor = "autosearch".$moduleId;
+$helper         = $this->helper('Magento\Search\Helper\Data');
+$searchHelper   = $this->helper('Lof\Autosearch\Helper\Data');
+$blockId        = 'lof-search' . $moduleId;
+?>
+<div class="<?php echo $prefix; ?> lof-autosearch box search_box" id="<?php echo $blockId ?>">
+    <form method="GET" id="form<?php echo $blockId ?>" action="<?php echo $this->getCatalogAdvancedSearchLink(); ?>">
+        <?php if(!empty($categories)) { ?>
+            <div class="filter_type category-filter">
+                <span class="fa fa-caret-down"></span>
+                <select name="cat">
+                    <option value="<?php echo $this->getRootCategoryId(); ?>"><?php echo __("All Categories"); ?></option>
+                    <?php echo $categories; ?>
+                </select>
+            </div>
+            <?php } ?>
+            <div id="<?php echo $module_seletor ?>" class="lof-search control">
+                <input 
+                type="text"
+                name="<?php echo $helper->getQueryParamName() ?>"
+                value="<?php echo $helper->getEscapedQueryText() ?>"
+                placeholder="<?php echo __('Search entire store here...'); ?>"
+                class="input-text"
+                autocomplete="off"/>
+                <input type="hidden" name="name" placeholder="<?php echo __('Search entire store here...'); ?>" value="<?php echo $helper->getEscapedQueryText() ?>" class="input-text" autocomplete="off"/>
+                <button class="button-search fa fa-search"></button>
+            </div>
+        </form>
+        <?php if(($trendingCollection = $block->getTerms()) && $trendingCollection->getSize()){ ?>
+            <div id="search-tags" class="search-tags">
+                <div class="title">
+                    <span><?php echo __('Trending keywords:'); ?></span>
+                </div>
+                <div class="content">
+                    <?php foreach ($trendingCollection as $_term): ?>
+                    <a href="<?php echo $this->getCatalogAdvancedSearchLink(); ?>?name=<?php echo $block->escapeHtml($_term->getQueryText()) ?>" style="font-size:<?php echo $_term->getPopularity()/100*80+90 ?>%;">
+                        <?php echo $block->escapeHtml($_term->getQueryText()) ?>
+                    </a>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
